@@ -6,7 +6,7 @@ trigger:
 variables:
   VM_IP_PUBLICA: "52.232.184.207" # Se debe colocar la IP pública de tu máquina virtual
   IMAGE_NAME: "dockermysql" # Se debe colocar el Nombre de la imagen que será descargada desde ACR
-  ACR_NAME: "sumativatres" # Se debe colocar el Nombre de tu Azure Container Registry (ACR)
+  ACR_NAME: "SumativaTres" # Se debe colocar el Nombre de tu Azure Container Registry (ACR)
   ACR_USERNAME: "SumativaTres" # Se debe colocar el Nombre de usuario del ACR
   ACR_PASSWORD: "VXFNkcpdw6mm4KGIas1pximKUnI6N01r9ZAKHZ1VN5+ACRCnSqND" # Se debe colocar la Contraseña del ACR
 
@@ -68,7 +68,7 @@ stages:
                     echo ${ACR_PASSWORD} | sudo docker login ${ACR_NAME}.azurecr.io -u ${ACR_USERNAME} --password-stdin > /dev/null 2>&1
 
                     # Descargar la imagen desde ACR
-                    sudo docker pull ${ACR_NAME}.azurecr.io/${IMAGE_NAME}
+                    sudo docker pull ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:latest
 
                     # Verificar si el contenedor MySQL ya está en ejecución
                     if sudo docker ps -a --format '{{.Names}}' | grep -Eq "^mysql_container\$"; then
