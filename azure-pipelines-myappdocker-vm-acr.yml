@@ -16,8 +16,8 @@ stages:
       - deployment: DeployToVM
         displayName: "Deploy MySQL to VM"
         environment:
-          name: "VM-Docker" # Nombre del entorno configurado en Azure DevOps
-          resourceType: VirtualMachine # Especifica que se conecta a una máquina virtual
+          name: "VM-Docker"
+          resourceType: VirtualMachine
         strategy:
           runOnce:
             deploy:
@@ -68,7 +68,7 @@ stages:
                     echo ${ACR_PASSWORD} | sudo docker login ${ACR_NAME}.azurecr.io -u ${ACR_USERNAME} --password-stdin > /dev/null 2>&1
 
                     # Descargar la imagen desde ACR
-                    sudo docker pull ${ACR_NAME}.azurecr.io/${ACR_NAME}.azurecr.io/${IMAGE_NAME}:latest
+                    sudo docker pull ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:latest
 
                     # Verificar si el contenedor MySQL ya está en ejecución
                     if sudo docker ps -a --format '{{.Names}}' | grep -Eq "^mysql_container\$"; then
@@ -81,7 +81,7 @@ stages:
                         -e MYSQL_DATABASE=my_database \
                         -e MYSQL_USER=mysqluser \
                         -e MYSQL_PASSWORD=Password123 \
-                        ${ACR_NAME}.azurecr.io/${ACR_NAME}.azurecr.io/${IMAGE_NAME}:latest
+                        ${ACR_NAME}.azurecr.io/${IMAGE_NAME}:latest
                     fi
 
                     sudo docker ps
